@@ -5,7 +5,7 @@ var createTask = function(taskText, taskDate, taskList) {
   // create elements that make up a task item
   var taskLi = $("<li>").addClass("list-group-item");
   var taskSpan = $("<span>")
-    .addClass("badge badge-primary badge-pill")
+    .addClass("badge badge-save badge-pill")
     .text(taskDate);
   var taskP = $("<p>")
     .addClass("m-1")
@@ -73,10 +73,10 @@ $(".card .list-group").sortable({
   tolerance: "pointer",
   helper: "clone",
   activate: function(event, ui) {
-    console.log(ui);
+    $(this).addClass("dropover");
   },
   deactivate: function(event, ui) {
-    console.log(ui);
+    $(this).removeClass("dropover");
   },
   over: function(event) {
     console.log(event);
@@ -269,6 +269,12 @@ $("#remove-tasks").on("click", function() {
   }
   saveTasks();
 });
+
+setInterval(function() {
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  })
+}, (1000 * 60) * 30);
 
 // load tasks for the first time
 loadTasks();
